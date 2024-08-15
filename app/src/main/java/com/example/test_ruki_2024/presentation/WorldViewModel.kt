@@ -38,9 +38,11 @@ class WorldViewModel(
         }
 
         val count = world.cells.count()
-        if (world.deadStreak == 3 && world.cells[count-4].state == CellState.LIFE) {
-            terminateLifeUseCase()
-            WorldState.ShowWorld(world)
+        if (count > 3) {
+            if (world.deadStreak == 3 && world.cells[count - 4].state == CellState.LIFE) {
+                terminateLifeUseCase()
+                WorldState.ShowWorld(world)
+            }
         }
     }
 }
