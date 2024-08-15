@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -48,64 +50,73 @@ fun MainScreen(
 ) {
     val worldState by viewModel.state.collectAsState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-
-        Button(
-            onClick = viewModel::createCell,
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
-            colors = ButtonColors(
-                contentColor = MaterialTheme.colorScheme.onBackground,
-                containerColor = MaterialTheme.colorScheme.secondary,
-                disabledContainerColor = Color.LightGray,
-                disabledContentColor = Color.DarkGray
-            ),
-            shape = RoundedCornerShape(5.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.create).uppercase(),
-                textAlign = TextAlign.Center,
-                fontSize = 14.sp,
-
+    Column {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(R.string.title),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
-        }
-
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.title),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    actionIconContentColor = MaterialTheme.colorScheme.onBackground
-                )
+            },
+            actions = {
+                IconButton(onClick = viewModel::clean) {
+                    Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onBackground,
+                actionIconContentColor = MaterialTheme.colorScheme.onBackground
             )
+        )
 
-            when (val state = worldState) {
-                is WorldState.Initial -> EmptyWorld()
-                is WorldState.ShowWorld -> WorldComponent(cells = state.world.cells)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Spacer(modifier = Modifier.height(35.dp))
+                when (val state = worldState) {
+                    is WorldState.Initial -> EmptyWorld()
+                    is WorldState.ShowWorld -> WorldComponent(
+                        cells = state.world.cells
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(50.dp))
             }
+
+            Button(
+                onClick = viewModel::createCell,
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                colors = ButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    disabledContainerColor = Color.LightGray,
+                    disabledContentColor = Color.DarkGray
+                ),
+                shape = RoundedCornerShape(5.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.create).uppercase(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp,
+                )
+            }
+
+
         }
     }
+
 }
 
 @Composable
@@ -113,7 +124,7 @@ fun EmptyWorld() {
     Card(
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp, top = 50.dp),
+            .padding(start = 20.dp, end = 20.dp),
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -140,6 +151,5 @@ fun EmptyWorld() {
                     .padding(bottom = 6.dp)
             )
         }
-
     }
 }

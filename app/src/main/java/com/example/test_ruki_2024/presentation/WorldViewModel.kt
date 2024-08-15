@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.test_ruki_2024.domain.entity.CellState
 import com.example.test_ruki_2024.domain.entity.World
+import com.example.test_ruki_2024.domain.usecase.CleanWorldUseCase
 import com.example.test_ruki_2024.domain.usecase.CreateCellUseCase
 import com.example.test_ruki_2024.domain.usecase.CreateLifeUseCase
 import com.example.test_ruki_2024.domain.usecase.GetWorldInfoUseCase
@@ -15,7 +16,8 @@ class WorldViewModel(
     private val createCellUseCase: CreateCellUseCase,
     private val createLifeUseCase: CreateLifeUseCase,
     private val terminateLifeUseCase: TerminateLifeUseCase,
-    private val getWorldInfoUseCase: GetWorldInfoUseCase
+    private val getWorldInfoUseCase: GetWorldInfoUseCase,
+    private val cleanWorldUseCase: CleanWorldUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow<WorldState>(WorldState.Initial)
@@ -42,6 +44,13 @@ class WorldViewModel(
                 terminateLifeUseCase()
                 WorldState.ShowWorld(world)
             }
+        }
+    }
+
+    fun clean() {
+        if (_state.value != WorldState.Initial) {
+            cleanWorldUseCase()
+            _state.value = WorldState.Initial
         }
     }
 }

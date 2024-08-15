@@ -41,6 +41,10 @@ class WorldRepositoryImpl : WorldRepository {
         return World(cells, aliveStreak, deadStreak)
     }
 
+    override fun cleanWorld() {
+        cells.clear()
+    }
+
     private fun getNearestLifeId(): Int {
         var lastLife = UNDEFINED
         cells.forEachIndexed { index, cell ->

@@ -6,6 +6,7 @@ import com.example.test_ruki_2024.domain.usecase.CreateCellUseCase
 import com.example.test_ruki_2024.domain.usecase.CreateLifeUseCase
 import com.example.test_ruki_2024.domain.usecase.GetWorldInfoUseCase
 import com.example.test_ruki_2024.domain.usecase.TerminateLifeUseCase
+import com.example.test_ruki_2024.domain.usecase.CleanWorldUseCase
 import com.example.test_ruki_2024.presentation.WorldViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
@@ -21,6 +22,7 @@ val worldModule = module {
     factoryOf(::GetWorldInfoUseCase)
     factoryOf(::CreateLifeUseCase)
     factoryOf(::TerminateLifeUseCase)
+    factoryOf(::CleanWorldUseCase)
 
     viewModelOf(::WorldViewModel)
 }

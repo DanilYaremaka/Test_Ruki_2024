@@ -12,4 +12,6 @@ interface WorldRepository {
 
     fun getWorldInfo(): World
 
+    fun cleanWorld()
+
 }
