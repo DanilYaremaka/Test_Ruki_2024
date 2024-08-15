@@ -28,7 +28,6 @@ class WorldViewModel(
         _state.value = WorldState.ShowWorld(world)
 
         checkStreak(world)
-        Log.d("VM", world.cells.count().toString())
     }
 
     private fun checkStreak(world: World) {
