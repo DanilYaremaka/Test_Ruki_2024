@@ -12,10 +12,13 @@ class WorldRepositoryImpl : WorldRepository {
     private var aliveStreak = 0
     private var deadStreak = 0
 
+    private var v = 0
+
     override fun createCell() {
-        if (Random.nextBoolean()) {
+        if (v>6) {
             aliveStreak++
             deadStreak = 0
+            v++
             cells.add(Cell(CellState.ALIVE))
         }
         else {
@@ -32,7 +35,7 @@ class WorldRepositoryImpl : WorldRepository {
     }
 
     override fun terminateLife() {
-        val lastLife = getNearestLifeId(cells)
+        val lastLife = getNearestLifeId()
         if (lastLife != UNDEFINED)
             cells.removeAt(lastLife)
     }
@@ -41,12 +44,13 @@ class WorldRepositoryImpl : WorldRepository {
         return World(cells, aliveStreak, deadStreak)
     }
 
-    private fun getNearestLifeId(list: List<Cell>): Int {
-        list.forEachIndexed { index, cell ->
+    private fun getNearestLifeId(): Int {
+        var lastLife = UNDEFINED
+        cells.forEachIndexed { index, cell ->
             if (cell.state == CellState.LIFE)
-                return index
+                lastLife = index
         }
-        return UNDEFINED
+        return lastLife
     }
 
     companion object {
