@@ -4,4 +4,5 @@
     <string name="title">Клеточное наполнение</string>
     <string name="world_is_empty">Мир пуст</string>
     <string name="description">Нажмите кнопку \"сотворить\", чтобы создать клетку</string>
+    <string name="dead_img"><![CDATA[https://img.icons8.com/?size=48&id=PAv1MQsQruGE&format=png]]></string>
 </resources>
