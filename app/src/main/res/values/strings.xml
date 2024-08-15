@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Test_Ruki_2024</string>
+    <string name="create">Сотворить</string>
+    <string name="title">Клеточное наполнение</string>
+    <string name="world_is_empty">Мир пуст</string>
+    <string name="description">Нажмите кнопку \"сотворить\", чтобы создать клетку</string>
 </resources>
