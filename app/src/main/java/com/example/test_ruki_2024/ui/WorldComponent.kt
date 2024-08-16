@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +35,6 @@ import coil.request.ImageRequest
 import com.example.test_ruki_2024.R
 import com.example.test_ruki_2024.domain.entity.Cell
 import com.example.test_ruki_2024.domain.entity.CellState
-import com.example.test_ruki_2024.domain.entity.Statistics
 import com.example.test_ruki_2024.domain.entity.World
 
 @Composable
