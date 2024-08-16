@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.test_ruki_2024.R
 import com.example.test_ruki_2024.presentation.WorldState
 import com.example.test_ruki_2024.presentation.WorldViewModel
@@ -50,7 +53,7 @@ fun MainScreen(
 ) {
     val worldState by viewModel.state.collectAsState()
 
-    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
             title = {
                 Text(
@@ -79,14 +82,13 @@ fun MainScreen(
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Spacer(modifier = Modifier.height(35.dp))
+
                 when (val state = worldState) {
                     is WorldState.Initial -> EmptyWorld()
-                    is WorldState.ShowWorld -> WorldComponent(
-                        cells = state.world.cells
-                    )
+                    is WorldState.ShowWorld -> WorldComponent(cells = state.world.cells)
                 }
 
                 Spacer(modifier = Modifier.height(50.dp))
@@ -95,7 +97,7 @@ fun MainScreen(
             Button(
                 onClick = viewModel::createCell,
                 modifier = Modifier
-                    .padding(20.dp)
+                    .padding(30.dp)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
                 colors = ButtonColors(
@@ -112,7 +114,6 @@ fun MainScreen(
                     fontSize = 14.sp,
                 )
             }
-
 
         }
     }
