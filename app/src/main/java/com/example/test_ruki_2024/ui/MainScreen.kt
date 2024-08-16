@@ -84,11 +84,10 @@ fun MainScreen(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Spacer(modifier = Modifier.height(35.dp))
 
                 when (val state = worldState) {
                     is WorldState.Initial -> EmptyWorld()
-                    is WorldState.ShowWorld -> WorldComponent(cells = state.world.cells)
+                    is WorldState.ShowWorld -> WorldComponent(world = state.world)
                 }
 
                 Spacer(modifier = Modifier.height(50.dp))
@@ -122,6 +121,9 @@ fun MainScreen(
 
 @Composable
 fun EmptyWorld() {
+
+    Spacer(modifier = Modifier.height(50.dp))
+
     Card(
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier

@@ -1,13 +1,11 @@
 package com.example.test_ruki_2024.ui
 
-import android.view.Display.Mode
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,49 +25,78 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.text.EmojiSupportMatch
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.test_ruki_2024.R
 import com.example.test_ruki_2024.domain.entity.Cell
 import com.example.test_ruki_2024.domain.entity.CellState
+import com.example.test_ruki_2024.domain.entity.Statistics
+import com.example.test_ruki_2024.domain.entity.World
 
 @Composable
 fun WorldComponent(
-    cells: List<Cell>
+    world: World
 ) {
     val listState = rememberLazyListState()
 
-    LaunchedEffect(cells.size) {
-        listState.animateScrollToItem(cells.size - 1)
+    LaunchedEffect(world.cells.size) {
+        listState.animateScrollToItem(world.cells.size - 1)
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(500.dp)
-    ) {
-        items(cells) {
-            CellItem(cell = it)
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp, bottom = 15.dp, start = 20.dp, end = 20.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            StatText(text = stringResource(R.string.life_count, world.stats.lifeCount))
+
+            StatText(text = stringResource(R.string.killed_count, world.stats.killedCount))
         }
 
+        LazyColumn(
+            state = listState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(500.dp)
+        ) {
+            items(world.cells) {
+                CellItem(cell = it)
+            }
+
+        }
+
+        Text(
+            text = stringResource(R.string.created_count, world.stats.createdCount),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
+            textAlign = TextAlign.Center
+        )
     }
+
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun StatText(text: String) {
+    Text(
+        text = text,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.onBackground
+    )
+}
+
 @Composable
 fun CellItem(cell: Cell) {
     Card(
@@ -96,7 +122,7 @@ fun CellItem(cell: Cell) {
                     .clip(shape = CircleShape)
                     .background(getBackgroundColor(state = cell.state))
                     .align(Alignment.CenterVertically)
-            ){
+            ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(getImgUrl(cell.state))

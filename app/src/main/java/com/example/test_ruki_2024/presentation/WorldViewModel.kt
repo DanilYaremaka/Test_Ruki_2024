@@ -35,14 +35,14 @@ class WorldViewModel(
     private fun checkStreak(world: World) {
         if (world.aliveStreak == 3) {
             createLifeUseCase()
-            WorldState.ShowWorld(world)
+            WorldState.ShowWorld(getWorldInfoUseCase())
         }
 
         val count = world.cells.count()
         if (count > 3) {
             if (world.deadStreak == 3 && world.cells[count - 4].state == CellState.LIFE) {
                 terminateLifeUseCase()
-                WorldState.ShowWorld(world)
+                WorldState.ShowWorld(getWorldInfoUseCase())
             }
         }
     }
