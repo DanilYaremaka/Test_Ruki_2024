@@ -1,6 +1,5 @@
 package com.example.test_ruki_2024.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.test_ruki_2024.domain.entity.CellState
 import com.example.test_ruki_2024.domain.entity.World
@@ -35,14 +34,14 @@ class WorldViewModel(
     private fun checkStreak(world: World) {
         if (world.aliveStreak == 3) {
             createLifeUseCase()
-            WorldState.ShowWorld(getWorldInfoUseCase())
+            _state.value = WorldState.ShowWorld(getWorldInfoUseCase())
         }
 
         val count = world.cells.count()
         if (count > 3) {
             if (world.deadStreak == 3 && world.cells[count - 4].state == CellState.LIFE) {
                 terminateLifeUseCase()
-                WorldState.ShowWorld(getWorldInfoUseCase())
+                _state.value = WorldState.ShowWorld(getWorldInfoUseCase())
             }
         }
     }
