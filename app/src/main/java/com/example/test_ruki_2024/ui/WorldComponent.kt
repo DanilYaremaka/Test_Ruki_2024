@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,30 +47,32 @@ fun WorldComponent(
         listState.animateScrollToItem(world.cells.size - 1)
     }
 
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 15.dp, bottom = 15.dp, start = 20.dp, end = 20.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            StatText(text = stringResource(R.string.life_count, world.stats.lifeCount))
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Column(modifier = Modifier.padding(bottom = 150.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp, bottom = 15.dp, start = 20.dp, end = 20.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                StatText(text = stringResource(R.string.life_count, world.stats.lifeCount))
 
-            StatText(text = stringResource(R.string.killed_count, world.stats.killedCount))
-        }
-
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-        ) {
-            items(world.cells) {
-                CellItem(cell = it)
+                StatText(text = stringResource(R.string.killed_count, world.stats.killedCount))
             }
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(world.cells) {
+                    CellItem(cell = it)
+                }
 
+            }
         }
-
         Text(
             text = stringResource(R.string.created_count, world.stats.createdCount),
             fontSize = 18.sp,
@@ -78,11 +80,11 @@ fun WorldComponent(
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp),
-            textAlign = TextAlign.Center
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 100.dp),
+            textAlign = TextAlign.Center,
         )
     }
-
 }
 
 @Composable
