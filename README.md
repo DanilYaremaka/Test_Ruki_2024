@@ -24,3 +24,16 @@
 --------------
 ## Стек:
 Kotlin, Clean Architecture, Single-module, MVI + JetPack Compose, DI - Koin, Coil
+
+----------------
+## Демонстрация
+
+<img src="https://github.com/user-attachments/assets/6e733123-a72f-47d8-9e24-b8b7e4b493e2" width="405" height="848"> 
+<img src="https://github.com/user-attachments/assets/3212891c-15d7-4015-a034-4bd28b7caeec" width="405" height="848"> 
+<img src="https://github.com/user-attachments/assets/a063e0dd-70a6-44bd-8c4c-3decee87b18d" width="405" height="848"> 
+<img src="https://github.com/user-attachments/assets/6268826e-fca9-4ebb-a582-73104ffa6d5c" width="405" height="848">
+
+
+
+
+
